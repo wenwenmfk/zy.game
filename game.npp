@@ -1,0 +1,43 @@
+<NotepadPlus>
+    <Project name="zyGame">
+        <Folder name="aud" />
+        <Folder name="css" />
+        <Folder name="img">
+            <File name="img\rect.jpg" />
+            <File name="img\rect.png" />
+        </Folder>
+        <Folder name="js">
+            <Folder name="core">
+                <Folder name="cls">
+                    <File name="js\core\cls\bar.js" />
+                    <File name="js\core\cls\button.js" />
+                    <File name="js\core\cls\form.js" />
+                    <File name="js\core\cls\image.js" />
+                    <File name="js\core\cls\label.js" />
+                    <File name="js\core\cls\radio.js" />
+                    <File name="js\core\cls\scroll.js" />
+                    <File name="js\core\cls\select.js" />
+                    <File name="js\core\cls\socket.js" />
+                    <File name="js\core\cls\text.js" />
+                    <File name="js\core\cls\ui.js" />
+                </Folder>
+                <Folder name="pls">
+                    <File name="js\core\pls\fps.js" />
+                </Folder>
+                <File name="js\core\draw.js" />
+                <File name="js\core\event.js" />
+                <File name="js\core\init.js" />
+                <File name="js\core\object.js" />
+                <File name="js\core\timer.js" />
+                <File name="js\core\util.js" />
+                <File name="js\core\load.js" />
+                <File name="js\core\type.js" />
+            </Folder>
+            <File name="js\game.js" />
+        </Folder>
+        <Folder name="vid" />
+        <File name="game.htm" />
+        <File name="game.npp" />
+        <File name="README.md" />
+    </Project>
+</NotepadPlus>
