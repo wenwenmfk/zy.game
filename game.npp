@@ -20,6 +20,9 @@
                     <File name="js\core\cls\socket.js" />
                     <File name="js\core\cls\text.js" />
                     <File name="js\core\cls\ui.js" />
+                    <File name="js\core\cls\picture.js" />
+                    <File name="js\core\cls\layer.js" />
+                    <File name="js\core\cls\object.js" />
                 </Folder>
                 <Folder name="pls">
                     <File name="js\core\pls\fps.js" />
@@ -27,7 +30,6 @@
                 <File name="js\core\draw.js" />
                 <File name="js\core\event.js" />
                 <File name="js\core\init.js" />
-                <File name="js\core\object.js" />
                 <File name="js\core\timer.js" />
                 <File name="js\core\util.js" />
                 <File name="js\core\load.js" />

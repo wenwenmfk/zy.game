@@ -2,13 +2,13 @@
 加载模块
 **********************************************************/
 
-zyGame.load=function(){
-	this.src=[];
-	this.callback;
+zyGame.load={
+	src      : [],
+	callback : function(){}
 };
 
 //加载回调
-zyGame.load.prototype.loaded=function(o){
+zyGame.load.loaded=function(o){
 	o.src.pop();
 	if (o.src.length==0){//加载完成
 		o.callback();
@@ -16,8 +16,10 @@ zyGame.load.prototype.loaded=function(o){
 };
 
 //加载资源
-zyGame.load.prototype.load=function(s){
+zyGame.load.load=function(s,cb){
 	this.src=s;
+	this.callback=cb;
+	
 	for (var i in s){
 		switch (s[i].slice(-4)){
 			case '.jpg':
@@ -27,14 +29,15 @@ zyGame.load.prototype.load=function(s){
 			case '.mp3':
 				this.loadaud(s[i]);
 				break;
-			case '.mp3':
+			case '.mp4':
 				this.loadvid(s[i]);
 				break;
 		}
 	}
 };
 
-zyGame.load.prototype.loadimg=function(s){
+//加载图像
+zyGame.load.loadimg=function(s){
 	var o=this;
 	zyGame.src.img[s]=new Image();
 	zyGame.src.img[s].onload=function(){
@@ -43,26 +46,24 @@ zyGame.load.prototype.loadimg=function(s){
 	zyGame.src.img[s].src='img/'+s;
 };
 
-zyGame.load.prototype.loadaud=function(s){
+//加载声音
+zyGame.load.loadaud=function(s){
 	var o=this;
 	zyGame.src.aud[s]=new Audio();
 	zyGame.src.aud[s].addEventListener("canplaythrough", function(){
-		if (typeof(oTrailer)=='undefined'){
-			o.loaded(o);
-		}
+		o.loaded(o);
 	});
 	zyGame.src.aud[s].src='aud/'+s;
 };
 
-zyGame.load.prototype.loadvid=function(s){
+//加载视频
+zyGame.load.loadvid=function(s){
 	var o=this;
-	zyGame.src.aud[s]=new Audio();
-	zyGame.src.aud[s].addEventListener("canplaythrough", function(){
-		if (typeof(oTrailer)=='undefined'){
-			o.loaded(o);
-		}
+	zyGame.src.vid[s]=new Video();
+	zyGame.src.vid[s].addEventListener("canplaythrough", function(){
+		o.loaded(o);
 	});
-	zyGame.src.aud[s].src='aud/'+s;
+	zyGame.src.vid[s].src='vid/'+s;
 };
 
 

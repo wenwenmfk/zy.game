@@ -7,21 +7,32 @@ zyGame.cls.image=function(l,t,w,h){
 	this.top=t;
 	this.width=w;
 	this.height=h;
-	this.z=4;
-	this.init();
+	
+	this.src='';
+	
+	this.zindex=0;
+	this.parent=zyGame;
 }
 
-zyGame.cls.image.prototype.init=function(){
-	this.align=0;
-	this.valign=0;
+//显示
+zyGame.cls.image.prototype.show=function(){
+	this.parent.object.add(this);
 };
 
-zyGame.cls.image.prototype.resize=function(){
-
+//隐藏
+zyGame.cls.image.prototype.hidden=function(){
+	this.parent.object.del(this);
 };
 
+//移动
+zyGame.cls.image.prototype.move=function(l,t){
+	this.left=l;
+	this.top=t;
+};
+
+//绘制
 zyGame.cls.image.prototype.draw=function(){
-	zyGame.draw.image(this.src,this.left,this.top,this.width,this.height);
+	zyGame.draw.image(this.src,this.left+this.parent.left,this.top+this.parent.top,this.width,this.height);
 };
 
 

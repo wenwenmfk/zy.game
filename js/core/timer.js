@@ -7,7 +7,7 @@ zyGame.timer={};
 
 //开始
 zyGame.timer.start=function(){
-	this.handle=setInterval(this.action,1);
+	this.handle=setInterval(this.frame,1);
 };
 	
 //停止
@@ -16,16 +16,7 @@ zyGame.timer.stop=function(){
 };
 
 //定时器函数
-zyGame.timer.action=function(){
+zyGame.timer.frame=function(){
 	zyGame.draw.clear();
 	zyGame.object.draw();
 };
-
-/* 	if (typeof(oLoadingBar)=='object'){
-	oLoadingBar.files=3800;
-	oLoadingBar.loaded++;
-}
-if (typeof(oTetris)=='object'){
-	oTetris.movedown();
-} */
-//oFps.frame++;

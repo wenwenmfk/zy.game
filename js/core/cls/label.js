@@ -2,20 +2,20 @@
 标签类
 **********************************************************/
 
-zyGame.cls.label=function(l,t,w,h,a,v){
-	this.rect=new zyGame.type.rect(l,t,w,h);
+zyGame.cls.label=function(l,t,w,h){
 	this.left=l;
 	this.top=t;
 	this.width=w;
 	this.height=h;
-	this.text='label';
-	this.zindex=4;
-	this.textStyle=new zyGame.type.textStyle();
+	this.right=this.left+this.width;
+	this.bottom=this.top+this.height;
 	
-	this.align;
-	this.valign;
-	this.textAlign;
-	this.textValign;
+	this.text=new zyGame.cls.text();
+	this.align='';
+	this.valign='';
+	this.color;
+	
+	this.zindex=4;
 };
 
 //移动

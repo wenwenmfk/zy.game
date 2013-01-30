@@ -2,23 +2,32 @@
 刷新率(fps)类
 **********************************************************/
 
-zyGame.pls.fps=function(){
+zyGame.pls.fps=function(l,t){
 	this.fps      = 0;
 	this.frame    = 0;
 	this.lastTime = Date.now();
-	this.label    = new zyGame.cls.label();
+	this.text     = new zyGame.cls.text(l,t);
+	this.text.text= '';
+	
+	this.zindex	  = 0;
 };
 
-zyGame.pls.fps.prototype.on=function(){
+//显示
+zyGame.pls.fps.prototype.show=function(){
 	zyGame.object.add(this);
-	zyGame.object.add(this.label);
 };
 
-zyGame.pls.fps.prototype.off=function(){
+//隐藏
+zyGame.pls.fps.prototype.hidden=function(){
 	zyGame.object.del(this);
-	zyGame.object.del(this.label);
 };
 
+//移动
+zyGame.pls.fps.prototype.move=function(l,t){
+	this.text.move(l,t);
+};
+
+//绘制
 zyGame.pls.fps.prototype.draw=function(){
 	this.frame++;
 	
@@ -27,12 +36,15 @@ zyGame.pls.fps.prototype.draw=function(){
 		this.lastTime=now;
 		this.fps=this.frame;
 		this.frame=0;
-		
-		//this.label.text='fps:'+this.fps;
 	}
+	this.drawCallback();
 };
 
-
+//绘制回调
+zyGame.pls.fps.prototype.drawCallback=function(){
+	this.text.text='fps:'+this.fps;
+	this.text.draw();
+};
 
 
 

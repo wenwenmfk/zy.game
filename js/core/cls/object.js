@@ -1,20 +1,21 @@
 ﻿/**********************************************************
-对象处理模块
+对象处理类
 **********************************************************/
 
-zyGame.object={
-	obj:[]//对象数组
+zyGame.cls.object=function(){
+	this.obj=[];
 };
 
+
 //绘制对象组中对象
-zyGame.object.draw=function(){
+zyGame.cls.object.prototype.draw=function(){
 	for (var i in this.obj){
 		this.obj[i].draw();
 	}
 };
 
 //向对象组添加一个对象
-zyGame.object.add=function(obj){
+zyGame.cls.object.prototype.add=function(obj){
 	if (this.obj.length==0){
 		this.obj.push(obj);
 	}else{
@@ -28,7 +29,7 @@ zyGame.object.add=function(obj){
 };
 	
 //删除对象组中指定对象
-zyGame.object.del=function(obj){
+zyGame.cls.object.prototype.del=function(obj){
 	for (var i in this.obj){
 		if (obj===this.obj[i]){
 			return this.obj.splice(i,1);
@@ -37,17 +38,21 @@ zyGame.object.del=function(obj){
 };
 
 //大小重置事件
-zyGame.object.resize=function(){
+zyGame.cls.object.prototype.resize=function(){
 	for (var i in this.obj){
 		this.obj[i].resize();
 	}
 };
 		
 //鼠标点击事件
-zyGame.object.click=function(x,y){
+zyGame.cls.object.prototype.click=function(x,y){
+	//console.log(x,y);
 	for (var i in this.obj){
 		if (typeof(this.obj[i].click)=='function'){
-			if (x>=this.obj[i].l && y>=this.obj[i].t && x<=this.obj[i].r && y<=this.obj[i].b){
+			if (x>=this.obj[i].left && 
+				y>=this.obj[i].top && 
+				x<=this.obj[i].left+this.obj[i].width &&
+				y<=this.obj[i].top+this.obj[i].height){
 				this.obj[i].click(x,y);
 			}
 		}
@@ -55,7 +60,7 @@ zyGame.object.click=function(x,y){
 };
 	
 //鼠标移动事件
-zyGame.object.mousemove=function(x,y){
+zyGame.cls.object.prototype.mousemove=function(x,y){
 	for (var i in this.obj){
 		if (typeof(this.obj[i].mousemove)=='function'){
 			if (x>=this.obj[i].l && y>=this.obj[i].t && x<=this.obj[i].r && y<=this.obj[i].b){

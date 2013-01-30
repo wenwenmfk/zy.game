@@ -2,11 +2,8 @@
 初始化模块
 **********************************************************/
 
-var zyGame={
-	cls : {},//基础类
-	pls : {},//插件类
-	src : {img:{},aud:{},vid:{},map:{}}//资源对象
-};
+zyGame.object=new zyGame.cls.object();
+
 
 window.onload=function(){
 	zyGame.init();
@@ -19,10 +16,17 @@ zyGame.init=function(){
 	this.cvs=document.getElementsByTagName('canvas')[0];
 	this.ctx=this.cvs.getContext('2d');
 	
+	this.move(0,0);
 	this.resize(this.config.width,this.config.height,this.config.fullscreen);
+	this.event.add('click');
 	this.timer.start();
 };
 
+
+zyGame.move=function(l,t){
+	this.left=l;
+	this.top=t;
+};
 
 //重置canvas大小
 zyGame.resize=function(w,h,fs){

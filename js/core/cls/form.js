@@ -1,34 +1,29 @@
 ﻿/**********************************************************
-窗体类
-align		水平对齐 0左 1居中 2右
-valing		垂直对齐 0上 1居中 2下
+窗体(form)类
 **********************************************************/
 
-zyGame.cls.form=function(left,top,width,height){
-	this.left=left;
-	this.top=top;
-	this.width=width;
-	this.height=height;
+zyGame.cls.form=function(l,t,w,h){
+	this.obj=[];
+	this.left=l;
+	this.top=t;
+	this.width=w;
+	this.height=h;
 	
-	this.align=1;
-	this.valign=1;
+	this.align='left';
+	this.valign='top';
+	
+	this.zindex=0;
+	this.parent=0;
 }
 
-zyGame.cls.form.prototype.draw=function(){
-	
+zyGame.cls.form.prototype.resize=function(){
+
 };
 
-zyGame.cls.form.prototype.resize=function(){
-	if (this.align==1){
-		this.left=Math.round(this.container.width-this.width/2);
-	}else if(this.align==2){
-		this.left=Math.round(CVS.width-this.width);
-	}
-	
-	if (this.valign==1){
-		this.top=Math.round(this.container.height-this.height/2);
-	}else if(this.valign==2){
-		this.top=Math.round(CVS.height-this.height);
+//绘制
+zyGame.cls.form.prototype.draw=function(){
+	for (var i in this.obj){
+		this.obj.draw();
 	}
 };
 
