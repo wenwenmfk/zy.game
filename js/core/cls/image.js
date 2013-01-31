@@ -30,5 +30,3 @@ zyGame.cls.image.prototype.draw=function(){
 	this.afterDraw();
 };
 
-
-

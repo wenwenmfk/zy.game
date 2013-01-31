@@ -37,6 +37,7 @@
                 <File name="js\core\type.js" />
                 <File name="js\core\method.js" />
                 <File name="js\core\define.js" />
+                <File name="js\core\storage.js" />
             </Folder>
             <File name="js\game.js" />
         </Folder>

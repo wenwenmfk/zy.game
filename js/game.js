@@ -21,10 +21,6 @@ zyGame.config={
 //zyGame.object.add(txt);
 
 
-
-
-
-
 var src=['rect.jpg'];
 zyGame.load.load(src,gameStart);
 
@@ -48,10 +44,19 @@ txt3.text='3333333';
 txt3.color='rgb(0,255,0)';
 txt3.show();
 
-var img=new zyGame.cls.image(10,200,100,100);
+var img=new zyGame.cls.image(10,10,50,100);
 img.src='rect.jpg';
-//img.parent=lay;
-img.click=zyGame.util.click;
+img.parent=lay;
+img.click=function(e){
+	console.log('1111');
+};
+
+var img3=new zyGame.cls.image(30,80,50,100);
+img3.src='rect.jpg';
+img3.parent=lay;
+img3.click=function(e){
+	console.log('333');
+};
 
 var fps=new zyGame.pls.fps(0,0);
 fps.text.color='rgb(150,150,150)';
@@ -65,15 +70,13 @@ img2.draw=function(){
 
 var t=new zyGame.cls.timer();
 t.tick=function(){
-	//for (var i=0;i<1000;i++){
-		console.log('111');
-	//}
 };
 t.on()
 
 function gameStart(){
 	//alert('game loaded');
 	img.show();
+	img3.show();
 }
 
 

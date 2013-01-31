@@ -36,6 +36,11 @@ zyGame.type.rect=function(){
 };
 
 
+zyGame.type.matrix=function(){
+	this.value=[];
+};
+
+
 
 
 

@@ -6,8 +6,8 @@ zyGame.event={};
 
 
 //添加事件
-zyGame.event.add=function(event){
-	switch (event){
+zyGame.event.add=function(e){
+	switch (e){
 		case 'click':
 			zyGame.cvs.onclick=this.onClick;
 			break;
@@ -30,8 +30,8 @@ zyGame.event.add=function(event){
 };
 
 //点击
-zyGame.event.onClick=function(event){
-	zyGame.object.click(event.offsetX,event.offsetY);
+zyGame.event.onClick=function(e){
+	zyGame.object.click(e);
 };
 
 
