@@ -5,5 +5,5 @@
 var zyGame={
 	cls : {},//基础类
 	pls : {},//插件类
-	src : {img:{},aud:{},vid:{},map:{}}//资源对象
+	src : {img:{},aud:{},vid:{},map:{}},//资源对象
 };

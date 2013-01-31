@@ -23,6 +23,7 @@
                     <File name="js\core\cls\picture.js" />
                     <File name="js\core\cls\layer.js" />
                     <File name="js\core\cls\object.js" />
+                    <File name="js\core\cls\timer.js" />
                 </Folder>
                 <Folder name="pls">
                     <File name="js\core\pls\fps.js" />
@@ -34,6 +35,8 @@
                 <File name="js\core\util.js" />
                 <File name="js\core\load.js" />
                 <File name="js\core\type.js" />
+                <File name="js\core\method.js" />
+                <File name="js\core\define.js" />
             </Folder>
             <File name="js\game.js" />
         </Folder>

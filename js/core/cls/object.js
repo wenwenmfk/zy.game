@@ -20,7 +20,7 @@ zyGame.cls.object.prototype.add=function(obj){
 		this.obj.push(obj);
 	}else{
 		for (var i in this.obj){
-			if (obj.zindex<=this.obj[i].zindex){
+			if (obj.zindex<this.obj[i].zindex){
 				return this.obj.splice(i,0,obj);
 			}
 		}

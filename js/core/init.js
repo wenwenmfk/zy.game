@@ -19,7 +19,7 @@ zyGame.init=function(){
 	this.move(0,0);
 	this.resize(this.config.width,this.config.height,this.config.fullscreen);
 	this.event.add('click');
-	this.timer.start();
+	this.timer.on();
 };
 
 

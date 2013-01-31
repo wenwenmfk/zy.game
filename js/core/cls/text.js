@@ -12,31 +12,32 @@ zyGame.cls.text=function(l,t){
 	this.valign='top';//可取值: top,bottom,middle
 	this.color='rgb(0,0,0)';
 	
+	this.visible=0;
 	this.zindex=0;
 	this.parent=zyGame;
+	
+	this.beforeDraw=function(){};
+	this.afterDraw=function(){};
 };
 
-//显示
-zyGame.cls.text.prototype.show=function(){
-	this.parent.object.add(this);
-};
 
-//隐藏
-zyGame.cls.text.prototype.hidden=function(){
-	this.parent.object.del(this);
-};
-
-//移动
-zyGame.cls.text.prototype.move=function(l,t){
-	this.left=l;
-	this.top=t;
-};
+zyGame.cls.text.prototype.show=zyGame.method.show;
+zyGame.cls.text.prototype.hidden=zyGame.method.hidden;
+zyGame.cls.text.prototype.move=zyGame.method.move;
 
 //绘制
 zyGame.cls.text.prototype.draw=function(){
+	this.beforeDraw();
 	zyGame.draw.save();
 	zyGame.draw.textStyle(this.font,this.align,this.valign,this.color);
 	zyGame.draw.text(this.text,this.left+this.parent.left,this.top+this.parent.top);
 	zyGame.draw.restore();
+	this.afterDraw();
 };
+
+
+
+
+
+
 
