@@ -4,17 +4,19 @@
 
 zyGame.cls.object=function(){
 	this.obj=[];
+	this.focus=0;
+	this.mousedowned=0;
 };
 
 
-//绘制对象组中对象
+//绘制
 zyGame.cls.object.prototype.draw=function(){
 	for (var i in this.obj){
 		this.obj[i].draw();
 	}
 };
 
-//向对象组添加一个对象
+//添加
 zyGame.cls.object.prototype.add=function(o){
 	if (this.obj.length==0){
 		this.obj.push(o);
@@ -28,7 +30,7 @@ zyGame.cls.object.prototype.add=function(o){
 	}
 };
 	
-//删除对象组中指定对象
+//删除
 zyGame.cls.object.prototype.del=function(o){
 	for (var i in this.obj){
 		if (o===this.obj[i]){
@@ -37,41 +39,53 @@ zyGame.cls.object.prototype.del=function(o){
 	}
 };
 
-//大小重置事件
+//大小重置
 zyGame.cls.object.prototype.resize=function(){
 	for (var i in this.obj){
 		this.obj[i].resize();
 	}
 };
 		
-//鼠标点击事件
-zyGame.cls.object.prototype.click=function(e){
-	//console.log(x,y);
+
+//鼠标按下
+zyGame.cls.object.prototype.mousedown=function(){
 	for (var i in this.obj){
 		var j=this.obj.length-1-i;
-		if (typeof(this.obj[j].click)=='function'){
-			if (e.offsetX>=this.obj[j].left+this.obj[j].parent.left && 
-				e.offsetY>=this.obj[j].top+this.obj[j].parent.top && 
-				e.offsetX<=this.obj[j].left+this.obj[j].width+this.obj[j].parent.left &&
-				e.offsetY<=this.obj[j].top+this.obj[j].height+this.obj[j].parent.top){
-				this.obj[j].click(e);
+		if (typeof(this.obj[j].mousedown)=='function'){
+			if (event.offsetX>=this.obj[j].left+this.obj[j].parent.left && 
+				event.offsetY>=this.obj[j].top+this.obj[j].parent.top && 
+				event.offsetX<=this.obj[j].left+this.obj[j].width+this.obj[j].parent.left &&
+				event.offsetY<=this.obj[j].top+this.obj[j].height+this.obj[j].parent.top){
+				this.mousedowned=this.obj[j];
+				this.obj[j].mousedown();
 				break;
 			}
 		}
 	}
 };
-	
-//鼠标移动事件
-zyGame.cls.object.prototype.mousemove=function(x,y){
-	for (var i in this.obj){
-		if (typeof(this.obj[i].mousemove)=='function'){
-			if (x>=this.obj[i].l && y>=this.obj[i].t && x<=this.obj[i].r && y<=this.obj[i].b){
-				this.obj[i].mousemove(x,y);
-			}else if (typeof(this.obj[i].mouseout)=='function'){
-				this.obj[i].mouseout();
+
+//鼠标抬起
+zyGame.cls.object.prototype.mouseup=function(){
+	if (this.mousedowned!=0){
+		this.mousedowned.mouseup();
+		if (typeof(this.mousedowned.click)=='function'){
+			if (event.offsetX>=this.mousedowned.left+this.mousedowned.parent.left && 
+				event.offsetY>=this.mousedowned.top+this.mousedowned.parent.top && 
+				event.offsetX<=this.mousedowned.left+this.mousedowned.width+this.mousedowned.parent.left &&
+				event.offsetY<=this.mousedowned.top+this.mousedowned.height+this.mousedowned.parent.top){
+				this.mousedowned.click();
 			}
 		}
+		this.mousedowned=0;
 	}
 };
+
+
+
+
+
+
+
+
 
 

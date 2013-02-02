@@ -2,70 +2,85 @@
 按钮类
 **********************************************************/
 
-function clsButton(l,t,w,h){
+zyGame.cls.button=function(l,t,w,h){
 	this.left=l;
 	this.top=t;
 	this.width=w;
 	this.height=h;
-	this.right=l+w;
-	this.bottom=t+h;
-
-	this.zindex=4;
-	this.title;
-	this.container;
-	this.align;
-	this.valign;
-	this.image;
-	this.text;
-	this.z=4;
-	this.borderstyle=1;
-	this.src;
-	//this.text=text;
+	
+	this.align='left';
+	this.valign='top';
+	this.enabled=1;
+	this.text=new zyGame.cls.text(l,t);
+	this.text.text='button';
+	this.image=new zyGame.cls.image(l,t,w,h);
+	this.src=[];
+	
+	this.visible=0;
+	this.zindex=0;
+	this.parent=zyGame;
 	
 	//事件
+	this.beforeDraw=function(){};
+	this.afterDraw=function(){};
 	this.onClick=function(){};
-	this.onMousemove=function(){};
-	this.onMouseover=function(){};
-	this.onMouseout=function(){};
+	this.onMousedown=function(){};
+	this.onMouseup=function(){};
 }
 
-clsButton.prototype.init=function(){//初始化
+zyGame.cls.button.prototype.show=zyGame.method.show;
+zyGame.cls.button.prototype.hidden=zyGame.method.hidden;
+zyGame.cls.button.prototype.move=zyGame.method.move;
 
+zyGame.cls.button.prototype.disable=function(){
+	this.enabled=0;
+	this.image.src=this.src[this.src.length-1];
+};
+zyGame.cls.button.prototype.enable=function(){
+	this.enabled=1;
+	this.image.src=this.src[0];
+};
+zyGame.cls.button.prototype.setsrc=function(){
+	this.src=arguments;
+	if (this.enabled==0){
+		this.image.src=this.src[this.src.length-1];
+	}else{
+		this.image.src=this.src[0];
+	}
 };
 
-clsButton.prototype.resize=function(){//初始化
-
+//绘制
+zyGame.cls.button.prototype.draw=function(){
+	this.beforeDraw();
+	this.image.draw();
+	if (this.text.text!=''){
+		this.text.draw();
+	}
+	this.afterDraw();
 };
 
-clsButton.prototype.draw=function(){
-	mDraw.image(this.src,this.left,this.top,this.width,this.height);
-
-	CTX.save();
-	Set_Shadow(1,1,1,'0,0,0','');
-	Set_Font('12px 宋体','center','middle','255,255,255','');	
-	CTX.fillText(this.text,this.left+this.width/2,this.top+this.height/2);
-	CTX.restore();
-}
-
-clsButton.prototype.click=function(){
-	this.onClick();
+//鼠标事件
+zyGame.cls.button.prototype.click=function(){
+	if (this.enabled==1){
+		this.onClick();
+	}
 };
 
-clsButton.prototype.mousemove=function(){
-	BODY.style.cursor='pointer';
-	this.onMousemove();
+zyGame.cls.button.prototype.mousedown=function(){
+	if (this.enabled==1){
+		if (this.src.length==3){
+			this.image.src=this.src[1];
+		}
+		this.onMousedown();
+	}
 };
-
-clsButton.prototype.mouseover=function(){
-	this.onMouseover();
+zyGame.cls.button.prototype.mouseup=function(){
+	if (this.enabled==1){
+		if (this.src.length==3){
+			this.image.src=this.src[0];
+		}
+		this.onMouseup();
+	}
 };
-
-clsButton.prototype.mouseout=function(){
-	BODY.style.cursor='auto';
-	this.onMouseout();
-};
-
-
-
 
 

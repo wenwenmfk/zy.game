@@ -12,13 +12,15 @@ window.onload=function(){
 //初始化
 zyGame.init=function(){
 	document.title=this.config.title;
+	this.docu=document;
 	this.body=document.body;
 	this.cvs=document.getElementsByTagName('canvas')[0];
 	this.ctx=this.cvs.getContext('2d');
 	
 	this.move(0,0);
 	this.resize(this.config.width,this.config.height,this.config.fullscreen);
-	this.event.add('click');
+	this.event.add('mousedown');
+	this.event.add('mouseup');
 	this.timer.on();
 };
 

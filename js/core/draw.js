@@ -24,7 +24,7 @@ zyGame.draw.restore=function(){
 
 //清除矩形区域
 zyGame.draw.clear=function(l,t,w,h){
-	if (arguments.lenght==4){
+	if (arguments.length==4){
 		zyGame.ctx.clearRect(l,t,w,h);
 	}else{
 		zyGame.ctx.clearRect(0,0,zyGame.width,zyGame.height);
