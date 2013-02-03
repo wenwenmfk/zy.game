@@ -8,13 +8,13 @@
   * 信箱：176206@qq.com
   * QQ群：194563450
 
-# 目录说明 #
+## 目录说明 ##
   * 引擎文件
     * zyGame.js
   * 事例游戏
     * hitmouse (打地鼠)
   
-# Classes列表(详见Wiki) #
+## Classes列表(详见Wiki) ##
   * zyGame.cls.text
   *	zyGame.cls.image
   *	zyGame.cls.layer
@@ -28,7 +28,7 @@
   *	zyGame.cls.input
   *	zyGame.cls.socket
   
-# Plugins列表(详见Wiki) #
+## Plugins列表(详见Wiki) ##
   * zyGame.pls.fps
   *	zyGame.pls.loading
   *	zyGame.pls.numberImgFont
