@@ -16,7 +16,8 @@ zyGame.config={
 	fullscreen : 0
 };
 
-var src=['bg.jpg','unit.jpg','hole.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png'];
+/**************************************控件设计-开始***************************************/
+var src=['bg.jpg','unit.jpg','hole.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png','bar_bg.jpg','bar_fore.jpg'];
 zyGame.load.load(src,gameStart);
 
 var fps=new zyGame.pls.fps(10,70);
@@ -30,7 +31,12 @@ var txtUnit=new zyGame.cls.text(22,30);
 txtUnit.text='第1关';
 
 var txtFarmHP=new zyGame.cls.text(70,20);
-txtFarmHP.text='农场破坏值：100';
+txtFarmHP.text='HP：';
+var barFarmHP=new zyGame.cls.bar(100,15,120,20);
+barFarmHP.setsrc('bar_bg.jpg','bar_fore.jpg');
+barFarmHP.ceil=100;
+barFarmHP.value=60;
+
 var txtGold=new zyGame.cls.text(70,40);
 txtGold.text='金币：';
 var nifGold=new zyGame.pls.numberImgFont(130,40,8,13);
@@ -50,7 +56,7 @@ var txtWater=new zyGame.cls.text(25,440);
 txtWater.text='水缸';
 
 var btnProp1=new zyGame.cls.button(80,430,30,30);
-btnProp1.setsrc('button_normal.jpg','button_down.jpg','button_disabled.png');
+btnProp1.setsrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
 btnProp1.onClick=function(){
 	console.log('click');
 };
@@ -78,9 +84,10 @@ for (var i=0;i<16;i++){
 	imgHole[i]=new zyGame.cls.image(5+80*(i%4),100+80*Math.floor(i/4),70,70);
 	imgHole[i].src='hole.jpg';
 }
+/**************************************控件设计-结束***************************************/
 
 
-
+//准备开始
 function gameStart(){
 	//alert('game loaded');
 	
@@ -91,6 +98,7 @@ function gameStart(){
 	txtUnit.show();
 	
 	txtFarmHP.show();
+	barFarmHP.show();
 	txtGold.show();
 	nifGold.show();
 	
