@@ -44,6 +44,8 @@ zyGame.config={
 
 //初始化游戏
 function gameInit(){
+	fps=new zyGame.plg.fps(10,70);
+
 	imgBg=new zyGame.cls.image(100,100,30,30);
 	imgBg.setSrc('bg.jpg');
 	//imgBg.animation.add('move');
@@ -85,9 +87,12 @@ function gameInit(){
 	barFarmHP.ceil=100;
 	barFarmHP.value=60;
 	
+	nifGold=new zyGame.plg.numberImgFont(10,10,8,13);
+	nifGold.setSrc('0123456789.png');
+	nifGold.setNumber(9876543210);
+	nifGold.setParent(layTest2);
+	
 	/* 
-	var fps=new zyGame.pls.fps(10,70);
-
 	var imgUnit=new zyGame.cls.image(10,10,50,50);
 	imgUnit.src='unit.jpg';
 	var txtUnit=new zyGame.cls.text(22,30);
@@ -99,9 +104,6 @@ function gameInit(){
 
 	var txtGold=new zyGame.cls.text(70,40);
 	txtGold.text='金币：';
-	var nifGold=new zyGame.pls.numberImgFont(130,40,8,13);
-	nifGold.src='0123456789.png';
-	nifGold.number=9876543210;
 
 	var imgWeather=new zyGame.cls.image(260,10,50,50);
 	imgWeather.src='unit.jpg';
@@ -140,6 +142,8 @@ function gameStart(){
 	
 	gameInit();
 	
+	fps.show();
+	
 	layTest.show();
 	layTest2.show();
 	txtTool.show();
@@ -148,16 +152,17 @@ function gameStart(){
 	//imgBg.move(100,200,'straight',10000);
 	imgBg2.show();
 	barFarmHP.show();
+	nifGold.show();
 	//imgBg2.move(200,100,'straight',5000);
-	/* fps.show();
 	
+	/* 
 	imgUnit.show();
 	txtUnit.show();
 	
 	txtFarmHP.show();
 	barFarmHP.show();
 	txtGold.show();
-	nifGold.show();
+	
 	
 	imgWeather.show();
 	txtWeather.show();
