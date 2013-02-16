@@ -46,11 +46,11 @@ zyGame.config={
 function gameInit(){
 	imgBg=new zyGame.cls.image(100,100,30,30);
 	imgBg.setSrc('bg.jpg');
-	imgBg.animation.add('move');
+	//imgBg.animation.add('move');
 
 	imgBg2=new zyGame.cls.image(10,10,30,30);
 	imgBg2.setSrc('bg.jpg');
-	imgBg2.animation.add('move');
+	//imgBg2.animation.add('move');
 
 	layTest=new zyGame.cls.layer(300,300,100,100);
 	imgBg2.setParent(layTest);
