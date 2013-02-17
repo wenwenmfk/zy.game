@@ -17,10 +17,10 @@ zyGame.config={
 		'快乐地鼠',
 	width: 
 		//游戏区域宽(若全屏显示,则为最小宽度)
-		500,
+		320,
 	height: 
 		//游戏区域高(若全屏显示,则为最小高度)
-		500,
+		480,
 	fullscreen: 
 		//0为非全屏，1为全屏
 		0,
@@ -35,7 +35,7 @@ zyGame.config={
 			视频文件支持mp4格式,放在目录vid下
 			如果有子目录,写上相对路径即可
 		*/
-		['bg.jpg','unit.jpg','hole.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png','bar_bg.jpg','bar_fore.jpg'],
+		['bg.jpg','unit.jpg','mouse1_3.jpg','mouse1_2.jpg','mouse1_1.jpg','mouse2_3.jpg','mouse2_2.jpg','mouse2_1.jpg','mouse3_3.jpg','mouse3_2.jpg','mouse3_1.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png','bar_bg.jpg','bar_fore.jpg'],
 	start:
 		//引擎加载完成,调用该函数开始游戏
 		gameStart
@@ -44,142 +44,167 @@ zyGame.config={
 
 //初始化游戏
 function gameInit(){
-	fps=new zyGame.plg.fps(10,70);
-
-	imgBg=new zyGame.cls.image(100,100,30,30);
+	//背景图
+	imgBg=new zyGame.cls.image(0,0,zyGame.width,zyGame.height);
 	imgBg.setSrc('bg.jpg');
-	//imgBg.animation.add('move');
-
-	imgBg2=new zyGame.cls.image(10,10,30,30);
-	imgBg2.setSrc('bg.jpg');
-	//imgBg2.animation.add('move');
-
-	layTest=new zyGame.cls.layer(300,300,100,100);
-	imgBg2.setParent(layTest);
-
-	layTest2=new zyGame.cls.layer(100,100,200,200);
-
-	imgBg.onClick=function(){
-		console.log('111');
-	};
-
-	imgBg2.onClick=function(){
-		console.log('222');
-	};
-
-	txtTool=new zyGame.cls.text(10,10);
-	txtTool.setText('工具');
+	imgBg.show();
 	
-	btnProp1=new zyGame.cls.button(80,430,30,30);
-	btnProp1.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
-	btnProp1.onClick=function(){
-		console.log('click');
-	};
-	btnProp1.onMousedown=function(){
-		console.log('down');
-	};
-	btnProp1.onMouseup=function(){
-		console.log('up');
-	};
+	fps=new zyGame.plg.fps(20,70);
+	fps.show();
 	
+	//关卡号
+	imgUnit=new zyGame.cls.image(10,10,50,50);
+	imgUnit.setSrc('unit.jpg');
+	imgUnit.show();
+	txtUnit=new zyGame.cls.text(22,30);
+	txtUnit.setText('第1关');
+	txtUnit.show();
+	
+	//农场HP
+	txtFarmHP=new zyGame.cls.text(70,20);
+	txtFarmHP.setText('HP：');
+	txtFarmHP.show();
 	barFarmHP=new zyGame.cls.bar(100,15,120,20);
 	barFarmHP.setSrc('bar_bg.jpg','bar_fore.jpg');
-	barFarmHP.ceil=100;
-	barFarmHP.value=60;
+	barFarmHP.ceil=10;
+	barFarmHP.value=10;
+	barFarmHP.show();
 	
-	nifGold=new zyGame.plg.numberImgFont(10,10,8,13);
+	//金币
+	txtGold=new zyGame.cls.text(70,40);
+	txtGold.setText('金币：');
+	txtGold.show();
+	nifGold=new zyGame.plg.numberImgFont(100,40,8,13);
 	nifGold.setSrc('0123456789.png');
-	nifGold.setNumber(9876543210);
-	nifGold.setParent(layTest2);
+	nifGold.setNumber(0);
+	nifGold.show();
 	
-	/* 
-	var imgUnit=new zyGame.cls.image(10,10,50,50);
-	imgUnit.src='unit.jpg';
-	var txtUnit=new zyGame.cls.text(22,30);
-	txtUnit.text='第1关';
-
-	var txtFarmHP=new zyGame.cls.text(70,20);
-	txtFarmHP.text='HP：';
-
-
-	var txtGold=new zyGame.cls.text(70,40);
-	txtGold.text='金币：';
-
-	var imgWeather=new zyGame.cls.image(260,10,50,50);
-	imgWeather.src='unit.jpg';
-	var txtWeather=new zyGame.cls.text(280,30);
+	//天气
+	imgWeather=new zyGame.cls.image(260,10,50,50);
+	imgWeather.setSrc('unit.jpg');
+	imgWeather.show();
+	txtWeather=new zyGame.cls.text(280,30);
 	txtWeather.text='晴';
-	var txtScore=new zyGame.cls.text(250,70);
-	txtScore.text='积分：1000';
-
-	var imgWater=new zyGame.cls.image(10,420,50,50);
-	imgWater.src='unit.jpg';
-	var txtWater=new zyGame.cls.text(25,440);
-	txtWater.text='水缸';
-
-	var imgProp2=new zyGame.cls.image(120,430,30,30);
-	imgProp2.src='unit.jpg';
-	var imgProp3=new zyGame.cls.image(160,430,30,30);
-	imgProp3.src='unit.jpg';
-	var imgProp4=new zyGame.cls.image(200,430,30,30);
-	imgProp4.src='unit.jpg';
-
+	txtWeather.show();
+	
+	//积分
+	txtScore=new zyGame.cls.text(250,70);
+	txtScore.setText('积分：');
+	txtScore.show();
+	nifScore=new zyGame.plg.numberImgFont(280,70,8,13);
+	nifScore.setSrc('0123456789.png');
+	nifScore.setNumber(0);
+	nifScore.show();
+	
+	//水桶
+	var btnWater=new zyGame.cls.button(10,420,50,50);
+	btnWater.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
+	btnWater.text.setText('水桶');
+	btnWater.onClick=function(){
+		console.log('倒水');
+	};
+	btnWater.show();
+	
+	//工具
 	var imgTool=new zyGame.cls.image(260,420,50,50);
-	imgTool.src='unit.jpg';
-	var txtTool=new zyGame.cls.text(275,440);
-	txtTool.text='工具';
-
-	var imgHole=[];
-	for (var i=0;i<16;i++){
-		imgHole[i]=new zyGame.cls.image(5+80*(i%4),100+80*Math.floor(i/4),70,70);
-		imgHole[i].src='hole.jpg';
-	} */
+	imgTool.setSrc('unit.jpg');
+	imgTool.show();
+	
+	//道具
+	btnProp1=new zyGame.cls.button(80,430,30,30);
+	btnProp1.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
+	btnProp1.text.setText('小网');
+	btnProp1.onClick=function(){
+		console.log('使用小网');
+	};
+	btnProp1.show();
+	btnProp2=new zyGame.cls.button(80+35*1,430,30,30);
+	btnProp2.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
+	btnProp2.text.setText('毒药');
+	btnProp2.onClick=function(){
+		console.log('使用毒药');
+	};
+	btnProp2.show();
+	btnProp3=new zyGame.cls.button(80+35*2,430,30,30);
+	btnProp3.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
+	btnProp3.text.setText('磁铁');
+	btnProp3.onClick=function(){
+		console.log('使用磁铁');
+	};
+	btnProp3.show();
+	btnProp4=new zyGame.cls.button(80+35*3,430,30,30);
+	btnProp4.setSrc('button_normal.jpg','button_down.jpg','button_disabled.jpg');
+	btnProp4.text.setText('肥料');
+	btnProp4.onClick=function(){
+		console.log('使用肥料');
+	};
+	btnProp4.show();
+	
+	//游戏结束
+	txtOver=new zyGame.cls.text(100,220);
+	txtOver.setText('游戏结束');
+	txtOver.setFontSize('36px');
+	txtOver.setFontWeight('bold');
+	txtOver.setFontColor('#ff0000');
+	
+	//地鼠(4*4=16只)
+	imgMouse=[];
+	for (var i=0 ; i<16 ; i++){
+		imgMouse[i]=new zyGame.cls.image(5+80*(i%4),100+80*Math.floor(i/4),70,70);
+		imgMouse[i].i=i;
+		imgMouse[i].timStay=zyGame.timer.createTimer(2000,1);
+		imgMouse[i].timStay.i=i;
+		imgMouse[i].timStay.tick=function(){
+			imgMouse[this.i].hide();
+			barFarmHP.value--;
+			this.off();
+			if (barFarmHP.value==0){
+				txtOver.show();
+				for (var i in imgMouse){
+					imgMouse[i].timStay.off();
+				}
+				timMouse.off();
+			}
+		};
+		imgMouse[i].onClick=function(){
+			if (timMouse.enabled==1){
+				this.hp--;
+				switch (this.hp){
+					case 2:
+						imgMouse[this.i].setSrc('mouse1_2.jpg');
+						break;
+					case 1:
+						imgMouse[this.i].setSrc('mouse1_1.jpg');
+						break;
+					case 0:
+						imgMouse[this.i].hide();
+						nifScore.setNumber(nifScore.getNumber()+1);
+						break;
+				}
+			}
+		};
+	}
+	
+	//定时器
+	timMouse=zyGame.timer.createTimer(500,1);
+	timMouse.tick=function(){
+		//do{
+			var rnd=Math.floor(Math.random()*imgMouse.length);
+		//}while(imgMouse[rnd].visible==0);
+		imgMouse[rnd].hp=3;
+		imgMouse[rnd].setSrc('mouse1_3.jpg');
+		imgMouse[rnd].show();
+		imgMouse[rnd].timStay.on();
+	};
 }
 
 //加载完毕开始游戏
 function gameStart(){
-	//alert('game loaded');
-	
 	gameInit();
 	
-	fps.show();
-	
-	layTest.show();
-	layTest2.show();
-	txtTool.show();
-	btnProp1.show();
-	//imgBg.show();
+	timMouse.on();
 	//imgBg.move(100,200,'straight',10000);
-	imgBg2.show();
-	barFarmHP.show();
-	nifGold.show();
 	//imgBg2.move(200,100,'straight',5000);
-	
-	/* 
-	imgUnit.show();
-	txtUnit.show();
-	
-	txtFarmHP.show();
-	barFarmHP.show();
-	txtGold.show();
-	
-	
-	imgWeather.show();
-	txtWeather.show();
-	txtScore.show();
-	
-	imgWater.show();
-	txtWater.show();
-	
-	imgProp2.show();
-	imgProp3.show();
-	imgProp4.show();
-	imgTool.show();
-	txtTool.show();
-	
-	for (var i=0;i<16;i++){
-		imgHole[i].show();
-	}*/
 }
 
  
