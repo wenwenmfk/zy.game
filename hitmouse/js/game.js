@@ -35,7 +35,7 @@ zyGame.config={
 			视频文件支持mp4格式,放在目录vid下
 			如果有子目录,写上相对路径即可
 		*/
-		['bg.jpg','unit.jpg','mouse1_3.jpg','mouse1_2.jpg','mouse1_1.jpg','mouse2_3.jpg','mouse2_2.jpg','mouse2_1.jpg','mouse3_3.jpg','mouse3_2.jpg','mouse3_1.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png','bar_bg.jpg','bar_fore.jpg'],
+		['bg.jpg','unit.jpg','mouse1_3.jpg','mouse1_2.jpg','mouse1_1.jpg','mouse2_3.jpg','mouse2_2.jpg','mouse2_1.jpg','mouse3_3.jpg','mouse3_2.jpg','mouse3_1.jpg','button_normal.jpg','button_down.jpg','button_disabled.jpg','0123456789.png','bar_bg.jpg','bar_fore.jpg','death.mp3'],
 	start:
 		//引擎加载完成,调用该函数开始游戏
 		gameStart
@@ -140,6 +140,12 @@ function gameInit(){
 	};
 	btnProp4.show();
 	
+	//提示信息
+	txtInfo=new zyGame.cls.text(100,220);
+	txtInfo.setFontSize('36px');
+	txtInfo.setFontWeight('bold');
+	txtInfo.setFontColor('#ff0000');
+	
 	//游戏结束
 	txtOver=new zyGame.cls.text(100,220);
 	txtOver.setText('游戏结束');
@@ -147,52 +153,82 @@ function gameInit(){
 	txtOver.setFontWeight('bold');
 	txtOver.setFontColor('#ff0000');
 	
-	//地鼠(4*4=16只)
+	//地鼠对象数组(编号0-15,4*4=16只)
 	imgMouse=[];
+	//地鼠图像数组
+	srcMouse=[['mouse1_1.jpg','mouse1_2.jpg','mouse1_3.jpg'],['mouse2_1.jpg','mouse2_2.jpg','mouse2_3.jpg'],['mouse3_1.jpg','mouse3_2.jpg','mouse3_3.jpg']];
 	for (var i=0 ; i<16 ; i++){
 		imgMouse[i]=new zyGame.cls.image(5+80*(i%4),100+80*Math.floor(i/4),70,70);
 		imgMouse[i].i=i;
-		imgMouse[i].timStay=zyGame.timer.createTimer(2000,1);
+		imgMouse[i].timStay=zyGame.timer.createTimer();//停留时间定时器
 		imgMouse[i].timStay.i=i;
-		imgMouse[i].timStay.tick=function(){
+		imgMouse[i].timStay.tick=function(){//地鼠逃走
 			imgMouse[this.i].hide();
-			barFarmHP.value--;
+			barFarmHP.value=(barFarmHP.value<=imgMouse[this.i].damage ? 0 : barFarmHP.value-imgMouse[this.i].damage);//破坏农场
 			this.off();
-			if (barFarmHP.value==0){
+			if (barFarmHP.value==0){//游戏结束
 				txtOver.show();
 				for (var i in imgMouse){
 					imgMouse[i].timStay.off();
 				}
-				timMouse.off();
+				timMouse.off();//关闭主定时器
 			}
 		};
+		//击中地鼠
 		imgMouse[i].onClick=function(){
 			if (timMouse.enabled==1){
-				this.hp--;
-				switch (this.hp){
-					case 2:
-						imgMouse[this.i].setSrc('mouse1_2.jpg');
-						break;
-					case 1:
-						imgMouse[this.i].setSrc('mouse1_1.jpg');
-						break;
-					case 0:
-						imgMouse[this.i].hide();
-						nifScore.setNumber(nifScore.getNumber()+1);
-						break;
+				this.hp--;//减1点血
+				imgMouse[this.i].setSrc(srcMouse[imgMouse[this.i].kind][imgMouse[this.i].hp-1]);//换图
+				if (this.hp==0){//地鼠死了
+					zyGame.src.aud['death.mp3'].play();//播放死亡叫声
+					imgMouse[this.i].hide();
+					imgMouse[this.i].timStay.off();
+					nifScore.setNumber(nifScore.getNumber()+imgMouse[this.i].score);//加积分
+					nifGold.setNumber(nifGold.getNumber()+imgMouse[this.i].gold);//加金币
+					//显示加积分提示文本
+					txtInfo.setLocation(imgMouse[this.i].x+5,imgMouse[this.i].y+12);
+					txtInfo.setText('+'+imgMouse[this.i].score);
+					txtInfo.show();
 				}
 			}
 		};
 	}
 	
-	//定时器
-	timMouse=zyGame.timer.createTimer(500,1);
+	//主定时器
+	timMouse=zyGame.timer.createTimer(1500,1);
 	timMouse.tick=function(){
-		//do{
-			var rnd=Math.floor(Math.random()*imgMouse.length);
-		//}while(imgMouse[rnd].visible==0);
-		imgMouse[rnd].hp=3;
-		imgMouse[rnd].setSrc('mouse1_3.jpg');
+		txtInfo.hide();
+		
+		do{//随机得到一个空的洞口
+			var rnd=zyGame.util.rnd(0,imgMouse.length-1);
+		}while(imgMouse[rnd].visible!=0);
+		
+		imgMouse[rnd].kind=zyGame.util.rnd(0,2);//随机得到一个地鼠种类
+		//设置地鼠属性
+		switch (imgMouse[rnd].kind){
+			case 0:
+				imgMouse[rnd].hp=1;//血量
+				imgMouse[rnd].damage=1;//破坏值
+				imgMouse[rnd].score=10;//奖励积分
+				imgMouse[rnd].gold=5;//奖励金币
+				imgMouse[rnd].timStay.setInterval(2000);//停留时长
+				break;
+			case 1:
+				imgMouse[rnd].hp=2;
+				imgMouse[rnd].damage=2;
+				imgMouse[rnd].score=20;
+				imgMouse[rnd].gold=10;
+				imgMouse[rnd].timStay.setInterval(1750);
+				break;
+			case 2:
+				imgMouse[rnd].hp=1;
+				imgMouse[rnd].damage=1;
+				imgMouse[rnd].score=80;
+				imgMouse[rnd].gold=25;
+				imgMouse[rnd].timStay.setInterval(1500);
+				break;
+		}
+		imgMouse[rnd].setSrc(srcMouse[imgMouse[rnd].kind][imgMouse[rnd].hp-1]);
 		imgMouse[rnd].show();
 		imgMouse[rnd].timStay.on();
 	};
@@ -201,10 +237,7 @@ function gameInit(){
 //加载完毕开始游戏
 function gameStart(){
 	gameInit();
-	
 	timMouse.on();
-	//imgBg.move(100,200,'straight',10000);
-	//imgBg2.move(200,100,'straight',5000);
 }
 
  
